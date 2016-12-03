@@ -2,24 +2,22 @@ package se1app.applicationcore.kontoKomponente;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import se1app.applicationcore.util.KontoNrTyp;
 
 @Entity
 public class Konto {
 
+	@GeneratedValue
 	@Id
+	private int id;
+	
 	private KontoNrTyp kontoNummer;
 	
 	private int kontoStand;
 	
-//	@OneToMany(cascade = CascadeType.ALL)
-//    @JoinColumn(name="kontoNr")
+	@OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="kontoNr")
 	private List<BuchungsPosition> buchungsPositionen;
 	
 	public Konto() {}
@@ -35,5 +33,14 @@ public class Konto {
 	@Override
 	public String toString() {
 		return kontoNummer.toString() + " Kontostand: " + kontoStand;
+	}
+
+	public void buche(int betrag) throws KontoNichtGedecktException {
+		if(betrag > 0 && (kontoStand + betrag) > 0) {
+			kontoStand = kontoStand + betrag;
+		} else {
+			throw new KontoNichtGedecktException(kontoNummer.toString());
+		}
+		
 	}
 }
