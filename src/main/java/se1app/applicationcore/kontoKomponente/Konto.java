@@ -1,5 +1,6 @@
 package se1app.applicationcore.kontoKomponente;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -20,7 +21,11 @@ public class Konto {
     @JoinColumn(name="kontoNr")
 	private List<BuchungsPosition> buchungsPositionen;
 	
-	public Konto() {}
+	public Konto(String kontoNr) {
+		this.kontoStand = 0;
+		this.kontoNummer = new KontoNrTyp(kontoNr);
+		this.buchungsPositionen = new ArrayList<>();
+	}
 	
 	public int getKontoStand() {
 		kontoStand = 0;
@@ -40,7 +45,7 @@ public class Konto {
 	}
 
 	public void buche(int betrag) throws KontoNichtGedecktException {
-		if(betrag < 0 && (getKontoStand() + betrag) < 0) {
+		if(getKontoStand() < 0 || (getKontoStand() + betrag) < 0) {
 			throw new KontoNichtGedecktException(kontoNummer.toString());
 		}
 		

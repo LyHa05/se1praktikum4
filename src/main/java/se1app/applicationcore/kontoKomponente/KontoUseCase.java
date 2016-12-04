@@ -1,7 +1,11 @@
 package se1app.applicationcore.kontoKomponente;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import se1app.applicationcore.util.KontoNrTyp;
 
 @Component
 public class KontoUseCase implements KontoKomponenteInterface{
@@ -21,7 +25,7 @@ public class KontoUseCase implements KontoKomponenteInterface{
 		Konto quellKonto = getKonto(quellKontonummer);
 		Konto zielKonto = getKonto(zielKontonummer);
 		BuchungsPosition bp1 = new BuchungsPosition(-betrag);
-		BuchungsPosition bp2 = new BuchungsPosition(-betrag);
+		BuchungsPosition bp2 = new BuchungsPosition(betrag);
 		quellKonto.buche(bp1.getGebuchterBetrag());
 		zielKonto.buche(bp2.getGebuchterBetrag());
 		newBuchungsPosition(quellKonto, bp1);
@@ -30,11 +34,12 @@ public class KontoUseCase implements KontoKomponenteInterface{
 	}
 
 	private Konto getKonto(String kontoNummer) throws KontoNichtGefundenException {
-		Konto konto = kr.findByKontoNummer(kontoNummer);
-		if (konto == null) {
+		KontoNrTyp kontoNrTyp = new KontoNrTyp(kontoNummer);
+		Optional<Konto> konto = kr.findByKontoNummer(kontoNrTyp);
+		if (konto.get() == null) {
 			throw new KontoNichtGefundenException(kontoNummer);
 		}
-		return konto;
+		return konto.get();
 	}
 	
 	private void newBuchungsPosition(Konto konto, BuchungsPosition newBuchungsPosition) {
