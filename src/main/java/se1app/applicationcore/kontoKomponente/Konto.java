@@ -23,6 +23,10 @@ public class Konto {
 	public Konto() {}
 	
 	public int getKontoStand() {
+		kontoStand = 0;
+		for (BuchungsPosition buchungsPosition : buchungsPositionen) {
+			kontoStand = kontoStand + buchungsPosition.getGebuchterBetrag();
+		}
 		return kontoStand;
 	}
 	
@@ -36,11 +40,13 @@ public class Konto {
 	}
 
 	public void buche(int betrag) throws KontoNichtGedecktException {
-		if(betrag > 0 && (kontoStand + betrag) > 0) {
-			kontoStand = kontoStand + betrag;
-		} else {
+		if(betrag < 0 && (getKontoStand() + betrag) < 0) {
 			throw new KontoNichtGedecktException(kontoNummer.toString());
 		}
 		
+	}
+
+	public void addBuchungsPosition(BuchungsPosition buchungsPosition) {
+		buchungsPositionen.add(buchungsPosition);
 	}
 }

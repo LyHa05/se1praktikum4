@@ -11,7 +11,9 @@ public class BuchungsPosition {
 	
 	private int gebuchterBetrag;
 
-	public BuchungsPosition() {}
+	public BuchungsPosition(int betrag) {
+		gebuchterBetrag = betrag;
+	}
 	
 	public int getId() {
 		return id;
