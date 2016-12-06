@@ -8,6 +8,10 @@ import se1app.applicationcore.customercomponent.Customer;
 import se1app.applicationcore.customercomponent.CustomerComponentInterface;
 import se1app.applicationcore.customercomponent.CustomerNotFoundException;
 import se1app.applicationcore.customercomponent.Reservation;
+import se1app.applicationcore.kontoKomponente.BuchungsPosition;
+import se1app.applicationcore.kontoKomponente.KontoKomponenteInterface;
+import se1app.applicationcore.kontoKomponente.KontoNichtGedecktException;
+import se1app.applicationcore.kontoKomponente.KontoNichtGefundenException;
 import se1app.applicationcore.moviecomponent.MovieComponentInterface;
 import se1app.applicationcore.moviecomponent.MovieNotFoundException;
 
@@ -21,7 +25,10 @@ class ApplicationFacadeController {
 
     @Autowired
     private MovieComponentInterface movieComponentInterface;
-
+    
+    @Autowired
+    private KontoKomponenteInterface kontoKomponenteInterface;
+    
     @RequestMapping("/customers")
     public List<Customer> getAllCustomers()
     {
@@ -38,12 +45,32 @@ class ApplicationFacadeController {
     public void deleteCustomer(@PathVariable("id") Integer id) {
         customerComponentInterface.deleteCustomer(id);
     }
-
+    
     @RequestMapping(value = "/customers", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public Customer addCustomer(@RequestBody Customer customer) {
         customerComponentInterface.addCustomer(customer);
         return customer;
+    }
+
+    @RequestMapping(value = "/transactions", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> addTransaction(@RequestBody int betrag) throws KontoNichtGefundenException, KontoNichtGedecktException {
+        try {
+        	kontoKomponenteInterface.ueberweise("000123", "000124", betrag);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch(KontoNichtGefundenException ex) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch(KontoNichtGedecktException ex) {
+        	return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch(Exception ex) {
+            return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @RequestMapping("/transactions")
+    public List<BuchungsPosition> getAllTransactions() throws KontoNichtGefundenException {
+        return kontoKomponenteInterface.getAllBuchungsPositionen("000123");
     }
 
     @RequestMapping(value = "/customers/{id}/reservations", method = RequestMethod.POST)

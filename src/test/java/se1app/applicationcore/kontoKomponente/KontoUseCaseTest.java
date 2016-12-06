@@ -72,10 +72,10 @@ public class KontoUseCaseTest {
 		kontoKomponenteInterface.ueberweise("000123", "000124", 15);
 	}
 	
-//	@Test(expected = KontoNichtGefundenException.class)
-//	public void testKontoNichtGefunden() throws KontoNichtGefundenException, KontoNichtGedecktException {
-//		k1.addBuchungsPosition(bp2);
-//		kontoKomponenteInterface.ueberweise("000123", "000125", 5);
-//	}
+	@Test(expected = KontoNichtGefundenException.class)
+	public void testKontoNichtGefunden() throws KontoNichtGefundenException, KontoNichtGedecktException {
+		k1.addBuchungsPosition(bp2);
+		kontoKomponenteInterface.ueberweise("000123", "000125", 5);
+	}
 
 }

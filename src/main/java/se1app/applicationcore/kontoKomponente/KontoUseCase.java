@@ -1,5 +1,8 @@
 package se1app.applicationcore.kontoKomponente;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,15 +39,33 @@ public class KontoUseCase implements KontoKomponenteInterface{
 	private Konto getKonto(String kontoNummer) throws KontoNichtGefundenException {
 		KontoNrTyp kontoNrTyp = new KontoNrTyp(kontoNummer);
 		Optional<Konto> konto = kr.findByKontoNummer(kontoNrTyp);
-		if (konto.get() == null) {
+		try {
+			konto.get();
+		} catch (NoSuchElementException e) {
 			throw new KontoNichtGefundenException(kontoNummer);
 		}
+
 		return konto.get();
 	}
 	
-	private void newBuchungsPosition(Konto konto, BuchungsPosition newBuchungsPosition) {
+	@Override
+	public void newBuchungsPosition(Konto konto, BuchungsPosition newBuchungsPosition) {
 		bpr.save(newBuchungsPosition);
-		konto.addBuchungsPosition(newBuchungsPosition);		
+		konto.addBuchungsPosition(newBuchungsPosition);
+		kr.save(konto);
+	}
+
+	@Override
+	public List<BuchungsPosition> getAllBuchungsPositionen(String kontoNummer) throws KontoNichtGefundenException {
+		List<BuchungsPosition> buchungen = new ArrayList<>();
+		Konto konto = getKonto(kontoNummer);
+		buchungen.addAll(konto.getBuchungsPositionen());
+		return buchungen;
+	}
+
+	@Override
+	public void kontoSpeichern(Konto konto) {
+		kr.save(konto);
 	}
 }
 

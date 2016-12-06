@@ -36,5 +36,9 @@ public class Filiale {
 	public void incrementBuchungen() {
 		anzahlBuchungen++;
 	}
+	
+	public void addKonto(Konto konto) {
+		gefuehrteKonten.add(konto);
+	}
 
 }

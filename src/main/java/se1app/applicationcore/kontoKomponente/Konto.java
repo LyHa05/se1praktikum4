@@ -27,6 +27,8 @@ public class Konto {
 		this.buchungsPositionen = new ArrayList<>();
 	}
 	
+	public Konto() {}
+	
 	public int getKontoStand() {
 		kontoStand = 0;
 		for (BuchungsPosition buchungsPosition : buchungsPositionen) {
@@ -53,5 +55,9 @@ public class Konto {
 
 	public void addBuchungsPosition(BuchungsPosition buchungsPosition) {
 		buchungsPositionen.add(buchungsPosition);
+	}
+	
+	public List<BuchungsPosition> getBuchungsPositionen() {
+		return new ArrayList<BuchungsPosition>(buchungsPositionen);
 	}
 }
