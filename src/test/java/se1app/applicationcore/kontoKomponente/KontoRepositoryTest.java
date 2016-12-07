@@ -1,10 +1,8 @@
 package se1app.applicationcore.kontoKomponente;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
 import java.util.List;
 import java.util.Optional;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,12 +11,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-import se1app.applicationcore.ApplicationOhneGUI;
+import se1app.applicationcore.Application;
 import se1app.applicationcore.util.KontoNrTyp;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-@ContextConfiguration(classes = ApplicationOhneGUI.class)
+@ContextConfiguration(classes = Application.class)
 @ActiveProfiles("test")
 public class KontoRepositoryTest {
 

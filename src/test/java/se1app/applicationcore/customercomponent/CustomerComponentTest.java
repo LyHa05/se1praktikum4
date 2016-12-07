@@ -8,7 +8,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-import se1app.applicationcore.ApplicationOhneGUI;
+import se1app.applicationcore.Application;
 import se1app.applicationcore.moviecomponent.*;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-@ContextConfiguration(classes = ApplicationOhneGUI.class)
+@ContextConfiguration(classes = Application.class)
 @ActiveProfiles("test")
 public class CustomerComponentTest {
 

@@ -1,9 +1,7 @@
 package se1app.applicationcore.filialeKomponente;
 
 import static org.junit.Assert.*;
-
 import javax.transaction.Transactional;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,12 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import se1app.applicationcore.ApplicationOhneGUI;
+import se1app.applicationcore.Application;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-@ContextConfiguration(classes = ApplicationOhneGUI.class)
+@ContextConfiguration(classes = Application.class)
 @ActiveProfiles("test")
 public class filialKomponenteTest {
 
