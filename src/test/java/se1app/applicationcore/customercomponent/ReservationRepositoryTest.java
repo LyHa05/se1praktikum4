@@ -8,7 +8,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-import se1app.applicationcore.Application;
+import se1app.applicationcore.ApplicationOhneGUI;
 import se1app.applicationcore.customercomponent.Customer;
 import se1app.applicationcore.customercomponent.CustomerRepository;
 import se1app.applicationcore.customercomponent.Reservation;
@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-@ContextConfiguration(classes = Application.class)
+@ContextConfiguration(classes = ApplicationOhneGUI.class)
 @ActiveProfiles("test")
 public class ReservationRepositoryTest {
 

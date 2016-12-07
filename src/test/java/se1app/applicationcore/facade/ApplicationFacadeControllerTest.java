@@ -13,7 +13,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.http.HttpStatus;
-import se1app.applicationcore.Application;
+import se1app.applicationcore.ApplicationOhneGUI;
 import se1app.applicationcore.customercomponent.Customer;
 import se1app.applicationcore.customercomponent.CustomerRepository;
 import se1app.applicationcore.customercomponent.Reservation;
@@ -22,7 +22,7 @@ import se1app.applicationcore.moviecomponent.Movie;
 import java.util.Arrays;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
+@SpringApplicationConfiguration(classes = ApplicationOhneGUI.class)
 @WebIntegrationTest
 @ActiveProfiles("test")
 public class ApplicationFacadeControllerTest {

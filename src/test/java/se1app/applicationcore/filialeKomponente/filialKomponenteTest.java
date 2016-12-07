@@ -12,11 +12,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import se1app.applicationcore.Application;
+import se1app.applicationcore.ApplicationOhneGUI;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-@ContextConfiguration(classes = Application.class)
+@ContextConfiguration(classes = ApplicationOhneGUI.class)
 @ActiveProfiles("test")
 public class filialKomponenteTest {
 
