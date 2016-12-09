@@ -53,11 +53,26 @@ class ApplicationFacadeController {
         return customer;
     }
 
-    @RequestMapping(value = "/transactions", method = RequestMethod.POST)
+//    @RequestMapping(value = "/buchungspositionen", method = RequestMethod.POST)
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public ResponseEntity<?> addTransaction(@RequestBody int betrag) throws KontoNichtGefundenException, KontoNichtGedecktException {
+//        try {
+//        	kontoKomponenteInterface.ueberweise("000123", "000124", betrag);
+//            return new ResponseEntity<>(HttpStatus.CREATED);
+//        } catch(KontoNichtGefundenException ex) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        } catch(KontoNichtGedecktException ex) {
+//        	return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+//        } catch(Exception ex) {
+//            return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+//        }
+//    }
+    
+    @RequestMapping(value = "/buchungspositionen", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> addTransaction(@RequestBody int betrag) throws KontoNichtGefundenException, KontoNichtGedecktException {
+    public ResponseEntity<?> addTransaction(@RequestBody BuchungsPosition buchungsPosition) throws KontoNichtGefundenException, KontoNichtGedecktException {
         try {
-        	kontoKomponenteInterface.ueberweise("000123", "000124", betrag);
+        	kontoKomponenteInterface.ueberweise("000123", "000124", buchungsPosition.getGebuchterBetrag());
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch(KontoNichtGefundenException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -68,7 +83,7 @@ class ApplicationFacadeController {
         }
     }
     
-    @RequestMapping("/transactions")
+    @RequestMapping("/buchungspositionen")
     public List<BuchungsPosition> getAllTransactions() throws KontoNichtGefundenException {
         return kontoKomponenteInterface.getAllBuchungsPositionen("000123");
     }
